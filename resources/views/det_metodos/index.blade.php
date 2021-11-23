@@ -28,7 +28,7 @@
                     <th>Tecnica</th>
                     <th>Insumo</th>
                     <th>Usuario</th>
-                    <th>Aciones</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

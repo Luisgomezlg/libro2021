@@ -166,7 +166,8 @@ body {
 }
 
 .yaybar .yaybar-wrap > ul li .yay-submenu li a {
-    color: #979797;
+    color: #fff;
+    padding: 0 40px;
 }
 
 .yaybar .yaybar-wrap > ul li .yay-submenu li:hover > a {
@@ -186,7 +187,7 @@ body {
 
 .yaybar .yaybar-wrap > ul > li > .yay-submenu > li > a {
     padding-right: 17px;
-    padding-left: 44.2px;
+    /*padding-left: 44.2px;*/
 }
 
 .yaybar .yaybar-wrap > ul > li > .yay-submenu > li.yay-item-active > a,

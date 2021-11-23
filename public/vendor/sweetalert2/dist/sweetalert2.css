@@ -356,6 +356,14 @@
   color: #fff;
   font-size: 1.0625em;
 }
+.swal2-styled.swal2-confirm:hover {
+  border: 0;
+  border-radius: 0.25em;
+  background: initial;
+  background-color: #3085d6;
+  color: #fff;
+  font-size: 1.0625em;
+}
 .swal2-styled.swal2-cancel {
   border: 0;
   border-radius: 0.25em;

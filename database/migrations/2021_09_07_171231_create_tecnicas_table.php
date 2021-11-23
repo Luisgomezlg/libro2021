@@ -16,11 +16,11 @@ class CreateTecnicasTable extends Migration
         Schema::create('tecnicas', function (Blueprint $table) {
             $table->id();
             $table->integer('categoria_id')->nullable();
-            $table->string('first_cod')->nullable()->default('');
-            $table->string('ind_cod')->nullable()->default('');
-            $table->string('title', 250)->nullable();
-            $table->text('description')->nullable();
-            $table->string('image', 2040)->nullable()->default('');
+            $table->string('first_cod_tec')->nullable()->default('');
+            $table->string('ind_cod_tec')->nullable()->default('');
+            $table->string('title_tec', 250)->nullable();
+            $table->text('description_tec')->nullable();
+            $table->string('image_tec', 2040)->nullable()->default('');
             $table->date('creation_date')->nullable();      
             $table->integer('level')->nullable();
             $table->integer('order')->nullable();

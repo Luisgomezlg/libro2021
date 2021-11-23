@@ -6,6 +6,8 @@ use App\Models\Insumo;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class productoController extends Controller
 {
@@ -19,18 +21,21 @@ class productoController extends Controller
 
     public function search(Request $request)
     {
+        //MOSTRAR LISTADO DE PRODUCTOS E INSUMOS - VISTA CLÍENTE
         $list = \DB::table('insumos')
         ->where("title_ins", 'like', '%' . $request->search . "%")
-        ->orderBy('insumos.id')
-        ->paginate(10);
+        ->orderBy('insumos.title_ins', 'asc')
+        ->paginate(20);
 
         return view('productos.list', ['list' => $list], compact('list'));
     }
 
     public function index()
     {
-        //
-        $insumos = Insumo::all();
+        //MOSTRAR DATOS EN LAS TABLAS - VISTA ADMIN
+        $insumos = \DB::table('insumos')
+        ->orderBy('insumos.title_ins', 'asc')
+        ->get(); 
         return view('productos.index', compact('insumos'));
     }
 
@@ -41,13 +46,13 @@ class productoController extends Controller
      */
     public function productos()
     {
-        //
+        //MOSTRAR PRODUCTOS VISTA LIST
         $list = Insumo::paginate(6);
         return view('productos.list', compact('list'));
     }
     public function create()
     {
-        //
+        //RETORNAR A ARCHIVO DE CREACIÓN
         return view('productos.create');
     }
 
@@ -62,37 +67,42 @@ class productoController extends Controller
         //
         $request->validate([
             'title_ins' => 'required',
-            'description_ins' => 'required',
-
         ]);
+        //METODO CARBÓN TRAE LA HORA ACTUAL
         $fecha = Carbon::now();
-        if ($request->hasFile('image')) {
-            $imagen = $request->file('image')->store('images', 'public');
+        //OBTENER EL ID DE USUARIO LOGUEADO
+        $user = Auth::user()->id;
+        //METODO PARA INSERTAR
+        try {
+            if ($imageName = $request->file('image')) {
+                $imageName = time().'.'.$request->image->extension();
             
-            $request->merge([
-                'image' => $imagen,
-            ]);
-            $producto = Insumo::create([
-                'title_ins' => $request->title_ins,
-                'description_ins' => $request->description_ins,
-                'image' => $imagen,
-                'creation_date' => $request->$fecha,
-                'id_user' => $request->id_user,
+                $request->image->move(public_path('image'),$imageName);
     
-            ]);
-        }
-        else{
-            $producto = Insumo::create([
-                'title_ins' => $request->title_ins,
-                'description_ins' => $request->description_ins,
-                'creation_date' => $request->creation_date,
-                'id_user' => $request->id_user,
-    
-            ]);
-        }
+                $producto = Insumo::create([
+                    'title_ins' => $request->title_ins,
+                    'description_ins' => $request->description_ins,
+                    'image' => $imageName,
+                    'creation_date' => $fecha,
+                    'id_user' => $user,
         
-
-        return redirect(route('productos.index'));
+                ]);
+                //dd($tecnica);
+            }else{
+                $producto = Insumo::create([
+                    'title_ins' => $request->title_ins,
+                    'description_ins' => $request->description_ins,
+                    'creation_date' => $fecha,
+                    'id_user' => $user,
+        
+                ]);
+            }
+            return redirect(route('productos.index'))
+            ->with('success', '¡Registro creado!');
+        } catch (\Exception $e){
+            return redirect()->back()
+                ->with('error', '¡Error al insertar!');
+        }
     }
 
     /**
@@ -103,7 +113,7 @@ class productoController extends Controller
      */
     public function show($id)
     {
-        //
+        //MOSTRAR DATOS DE UN INSUMO O PRODUCTO X ID
         $show = \DB::table('insumos')
             ->where('insumos.id', '=', $id)
             ->get();
@@ -119,7 +129,8 @@ class productoController extends Controller
      */
     public function edit(Insumo $producto)
     {
-        //
+        //RETORNAR A ARCHIVO DE EDICCIÓN
+        
         return view("productos.edit", compact('producto'));
     }
 
@@ -134,21 +145,49 @@ class productoController extends Controller
     public function update(Request $request, Insumo $producto)
     {
         //
-        $prod = $request->all();
+        $fecha = Carbon::now();
+        $user = Auth::user()->id;
+        //METODO PARA ACTUALIZAR
+        try {
+            if ($imageName = $request->file('image')) {
+                $imageName = time().'.'.$request->image->extension();
+            
+                $request->image->move(public_path('image'),$imageName);
+    
+                $producto->update([
+                    'title_ins' => $request->title_ins,
+                    'description_ins' => $request->description_ins,
+                    'image' => $imageName,
+                    'creation_date' => $fecha,
+                    'id_user' => $user,
+        
+                ]);
+            }else{
+                $producto->update([
+                    'title_ins' => $request->title_ins,
+                    'description_ins' => $request->description_ins,
+                    'creation_date' => $fecha,
+                    'id_user' => $user,
+        
+                ]);
+            }
+            return redirect(route('productos.index'))->with('success', '¡Registro actualizado!');
 
-        if ($imagen = $request->file('image')) {
-            $rutaGuardarImg = 'images/';
-            $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
-            $imagen->move($rutaGuardarImg, $imagenProducto);
-            $prod['image'] = "$imagenProducto";
-        }else{
-            unset($prod['image']);
+        } catch (\Exception $e){
+            return redirect()->back()
+                ->with('error', '¡Error al insertar!');
         }
-        $producto->update($prod);
-        //dd($metodo);
-        return redirect(route('productos.index'));
     }
-
+    public function imageDelete(Insumo $producto)
+    {
+        //RETORNAR A ARCHIVO DE EDICCIÓN
+        $imageName = "";
+        $producto->update([
+            'image' => $imageName
+        ]);
+        return redirect()->back()
+        ->with('success', '¡Se eliminó la imagen!');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -158,5 +197,7 @@ class productoController extends Controller
     public function destroy($id)
     {
         //
+        Insumo::where('id',$id)->delete();
+        return back();
     }
 }

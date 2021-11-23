@@ -19,7 +19,7 @@ class CreateMetodosTable extends Migration
             $table->string('ind_cod')->nullable()->default('');
             $table->string('title', 250)->nullable()->default('');
             $table->text('description')->nullable();
-            $table->string('image', 2040)->nullable();
+            $table->string('image_met', 2040)->nullable();
             $table->integer('id_insumo')->nullable();
             $table->integer('id_tecnica')->nullable();
             $table->date('creation_date')->nullable();

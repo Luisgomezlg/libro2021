@@ -17,7 +17,7 @@ class Administrador
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check() || !$request->user()->esAdmin()) {
-            return redirect()->route('unauthorized');
+            return redirect('/');
          }
         return $next($request);
     }
