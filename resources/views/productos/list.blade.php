@@ -20,26 +20,37 @@
                 </h2>
             </div>
             <div class="border-t border-gray-200">
-                <form class="d-flex" action="{{ action('productoController@search')}}" method="get">
+                <!--<form class="d-flex" action="" method="get">
                         <input type="search" name="search" id="search"  class="form-control form-control-sm" placeholder="Buscar producto" aria-controls="example">
                         <button class="btn btn-outline-primary btn-sm ml-5" type="submit"><span stroke-width="1.5" data-feather="search"></span></button>
-                </form>
+                </form>-->
                 <dl>
                     @if($list)
-                    @foreach($list as $li)
-                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            <a href="" onclick="window.location='{{ action('productoController@show', $li->id)}}'">{{$li->title_ins}}</a>
-                        </dt>
+                    
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"style="width:50%">
+                        <table id="example" class="table table-striped table-bordered " style="width:100%;">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th style="display: none;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($list as $li)
+                                <tr>
+                                    <td><a href="" style="font-weight: bold; font-size: 19px;" onclick="window.location='{{ action('productoController@show', $li->id)}}'">{{$li->title_ins}}</a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!--<dt class="text-sm font-medium text-gray-500">
+                            
+                        </dt>-->
                     </div>
-                    @endforeach
-
+                    
                     @else
                         <p>No hay datos</p>
                     @endif
                 </dl>
-                {!! $list->links() !!}
-
             </div>
         </div>
     </div>

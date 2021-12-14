@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Cache-control" content="no-cache">
-  <title>Métodos Principales</title>
+  <title>Encabezado Métodos</title>
 </head>
 
 <body>
@@ -19,9 +19,9 @@
 
   <div class="metodos">
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <h2>Métodos Principales</h2>
+    <h2>Encabezado Métodos</h2>
 
-    <a onclick="window.location='{{ url("metodosP/create") }}'"><button class="btn btn-primary border border-gray-400 rounded ">Añadir Método Principal</button></a>
+    <a onclick="window.location='{{ url("metodosP/create") }}'"><button class="btn btn-primary border border-gray-400 rounded ">Añadir Encabezado</button></a>
 
     <div class="mt-5">
       <div class="flex flex-col">

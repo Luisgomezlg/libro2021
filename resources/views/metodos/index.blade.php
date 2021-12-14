@@ -31,7 +31,6 @@
                     <th>Titulo</th>
                     <th class="description">Descripción</th>
                     <th>Imagen</th>
-                    <th>Usuario</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -59,9 +58,6 @@
                          <a target="_blank" href="{{ URL::to('/') }}/image/{{ $met->image_met }}"><img src="/image/{{ $met->image_met }}" width="100px"></a>
                          @endif
                       </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div class="text-sm text-gray-900">{{$met->name}}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <a class="btn btn-edit" onclick="window.location='{{ route('metodos.edit', $met->id_metodo) }}'"><span stroke-width="1.5" data-feather="edit"></span></a>

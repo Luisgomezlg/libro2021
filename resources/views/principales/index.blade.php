@@ -10,11 +10,8 @@
   <div class="metodos">
     <!-- This example requires Tailwind CSS v2.0+ -->
     <h2>Introducciones</h2>
-    @if($cont->count() > 3)
-    <a class="text-primary" onclick="window.location='{{ url("principales") }}'">No puedes agregar mas de 3 registros</a>
-    @else
     <a onclick="window.location='{{ url("principales/create") }}'"><button class="btn btn-primary border border-gray-400 rounded ">Añadir Introducción</button></a>
-    @endif
+
     <div class="mt-5">
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

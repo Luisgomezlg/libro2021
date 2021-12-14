@@ -67,7 +67,7 @@ class tecnicaController extends Controller
 
         view()->share('tecnicas', $show);
         $pdf = PDF::loadView('show-pdf', compact('show', 'list'));
-        return $pdf->download('archivo-pdf.pdf');
+        return $pdf->stream('archivo-pdf.pdf');
         
     }
     public function createPDF2(){
@@ -126,7 +126,6 @@ class tecnicaController extends Controller
                 $request->image_tec->move(public_path('image'),$imageName);
     
                 $tecnica = Tecnica::create([
-                    'categoria_id' => $request->categoria_id,
                     'first_cod_tec' => $request->id_tecnica,
                     'ind_cod_tec' => $request->ind_cod_tec,
                     'title_tec' => $request->title_tec,
@@ -141,7 +140,6 @@ class tecnicaController extends Controller
                 //dd($tecnica);
             }else{
                 $tecnica = Tecnica::create([
-                    'categoria_id' => $request->categoria_id,
                     'first_cod_tec' => $request->id_tecnica,
                     'ind_cod_tec' => $request->ind_cod_tec,
                     'title_tec' => $request->title_tec,
@@ -153,7 +151,7 @@ class tecnicaController extends Controller
         
                 ]);
             }
-            return redirect(route('tecnicas.index'))
+            return redirect()->back()
             ->with('success', '¡Registro creado!');
         } catch (\Exception $e){
             return redirect()->back()

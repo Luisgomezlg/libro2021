@@ -28,7 +28,9 @@
                 @foreach ($list as $li)
                 @if (Request::is('metodos/*'))
                 @foreach ($list as $li)
-                <a class="btn btn btn-outline-dark border-dark btn-sm" href="" onclick="window.location='{{ action('metodoController@show2', $li->first_cod) }}'">PDF</a>
+                <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" target="_blank" href="{{ action('metodoController@createPDF', $li->first_cod) }}">
+                     Convertir a PDF <span stroke-width="1.5" data-feather="arrow-right"></span>
+                </a>
                 @endforeach
                 @else
                 <p></p>
@@ -38,15 +40,17 @@
                 @foreach ($list as $li)
                 @if (Request::is('tecnicas/*'))
                 @foreach ($list as $li)
-                <a class="btn btn-outline-dark border-dark btn-sm" href="" onclick="window.location='{{ action('tecnicaController@show2', $li->first_cod_tec) }}'">PDF</a>
+                <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" target="_blank" href="{{ action('tecnicaController@createPDF', $li->first_cod_tec) }}">
+                     Convertir a PDF <span stroke-width="1.5" data-feather="arrow-right"></span>
+                </a>
                 @endforeach
                 @else
                 <p></p>
                 @endif
                 @endforeach
-               
+
             </div>
-          
+
             <div class="border-t border-gray-200">
                 <dl>
                     @php
@@ -60,12 +64,17 @@
                         @if ($li->insumo_id != null)
                         @if ($bandera == 0)
 
-                        <h4>@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif </h4>
                         @php
                         $bandera = 1;
                         @endphp
+                        <h4>@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif </h4>
+
                         <div id="collapseOne" style="display: block;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            @else
+                        <div style="display: block;">
+                                <a tabindex="0" class="btn btn-lg btn-success popover-dismiss text-white mb-3" role="button" data-toggle="popover" data-trigger="focus" 
+                            title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
+                            </div> 
+                        @else
                             <div style="display: block;">
                                 <a tabindex="0" class="btn btn-lg btn-success popover-dismiss text-white mb-3" role="button" data-toggle="popover" data-trigger="focus" 
                             title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
@@ -85,14 +94,15 @@
                         @if ($li->description_tec != null)
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
-                            {!! nl2br(e($li->description_tec)) !!}
-                                @if($li->image_tec == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_tec }}"><img src="/image/{{ $li->image_tec }}" width="150px"></a>@endif
+                                {!! nl2br(e($li->description_tec)) !!}
+                                @if ($li->image_tec == null) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_tec }}"><img style="margin-left: 10%; width: 80%;" src="/image/{{ $li->image_tec }}"></a>@endif
                             </p>
                         </div>
                         @else
                         <div id="collapseOne" style="display: none;" style="margin-bottom: -370px;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
-                                @if($li->image_tec == NULL) @else<img src="/image/{{ $li->image_tec }}" width="150px">@endif
+                                @if ($li->image_tec == null) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_tec }}"><img style="margin-left: 10%; width: 80%;" src="/image/{{ $li->image_tec }}"></a>@endif
+
                             </p>
                         </div>
                         @endif
@@ -110,15 +120,29 @@
 
                         <div id="collapseOne" style="display: block;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
                             @if (Request::is('tecnicas/*'))
-                            <p class="card-body">
-                                <a class="btn btn-secundary fs-1" style="text-transform:capitalize;" href="{{ action('tecnicaController@show', $li->first_cod_tec) }}" target="_blank">{{ $li->title_tec }}</a>
-                            </p>
-                            @endif
-                            @else
                             <div style="display: block;">
                                 <a style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary fs-1 text-primary" href="{{ action('tecnicaController@show', $li->first_cod_tec) }}" target="_blank">{{ $li->title_tec }}</a>
 
                             </div>
+                            @else
+                            @if ($li->first_cod_tec != null)
+                            <div style="display: block;">
+                                <a style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary fs-1 text-primary" href="{{ action('tecnicaController@show', $li->first_cod_tec) }}" target="_blank">{{ $li->title_tec }}</a>
+
+                            </div>
+                            @else
+                            
+                            @endif
+                            @endif
+                            @else
+                            @if ($li->first_cod_tec != null)
+                            <div style="display: block;">
+                                <a style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary fs-1 text-primary" href="{{ action('tecnicaController@show', $li->first_cod_tec) }}" target="_blank">{{ $li->title_tec }}</a>
+
+                            </div>
+                            @else
+                            
+                            @endif
                             @endif
                             @else
                             @if ($bandera1 == 1)
@@ -129,17 +153,20 @@
                         @endif
 
                         @if ($li->description != null)
+                        @if($li->ind_cod == "-" || $li->ind_cod == "-")
+                        <h4 style="display: none;">@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif</h4>
+                        @else
                         <h4>@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif</h4>
-
+                        @endif
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
-                                @if($li->title == 'predecesor' || $li->title == 'Predecesor')
-                                    <a style="font-size: 14px;" class="btn btn-secundary fs-1 text-primary" href="{{ action('metodoController@showpre', $li->predecesor_met ) }}" target="_blank">{{$li->description}}</a>
+                                @if ($li->title == 'predecesor' || $li->title == 'Predecesor')
+                                <a style="font-size: 16px;" class="btn btn-secundary fs-1 text-primary text-capitalize" href="{{ action('metodoController@showpre', $li->predecesor_met) }}" target="_blank">{{ $li->description }}</a>
                                 @else
                                 {!! nl2br(e($li->description)) !!}
                                 @endif
                                 <br>
-                                @if($li->image_met == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img src="/image/{{ $li->image_met }}" width="150px"></a>@endif
+                                @if ($li->image_met == null) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img style="margin-left: 10%; width: 80%;" src="/image/{{ $li->image_met }}"></a>@endif
                             </p>
                         </div>
                         @else

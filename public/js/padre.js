@@ -24,6 +24,11 @@ $(document).ready(function() {
         }
     });
 
+    if ($('option').val() == 98) {
+        $("option").css("display", "none");
+    } else {
+        $("option").show();
+    }
     oTable = $('#example').DataTable({
         language: {
             "decimal": "",
@@ -47,8 +52,8 @@ $(document).ready(function() {
         },
         "order": [],
         "lengthMenu": [
-            [3, 15, 20, -1],
-            [3, 10, 20, "Todos"] // change per page values here
+            [5, 15, 20, -1],
+            [5, 10, 20, "Todos"] // change per page values here
         ],
         responsive: true,
         "bDestroy": true
@@ -81,7 +86,8 @@ $(document).ready(function() {
         ],
         responsive: true,
         "bDestroy": true
-    })
+    });
+
 });
 $('.livesearch').select2({
     placeholder: 'Selecciona el Insumo',
@@ -103,8 +109,10 @@ $('.livesearch').select2({
         cache: true
     }
 });
+
 $('.insumo').select2({
     placeholder: 'Selecciona el Insumo',
+    allowClear: true,
     ajax: {
         url: '/ajax-insumo',
         dataType: 'json',
@@ -122,9 +130,27 @@ $('.insumo').select2({
         },
         cache: true
     }
+}).on("select2:select", function (e) {
+    $(".tecnica").prop('disabled', true); 
+    var divs = document.getElementsByClassName("select2-selection__choice").length;
+    console.log("Hay " + divs + " elementos");
+
 });
+$('.insumo').on('select2:clearing', function(evt) {
+        $(".tecnica").prop('disabled', false); 
+});
+$('.insumo').on('select2:unselect', function(e) {
+    var divs = document.getElementsByClassName("select2-selection__choice").length;
+    console.log("Hay " + divs + " elementos");
+    if (divs == 0) {
+        $(".tecnica").prop('disabled', false); 
+    }
+});
+
+
 $('.tecnica').select2({
     placeholder: 'Selecciona la Técnica',
+    allowClear: true,
     ajax: {
         url: '/ajax-tecnica',
         dataType: 'json',
@@ -142,7 +168,24 @@ $('.tecnica').select2({
         },
         cache: true
     }
+}).on("select2:select", function (e) {
+    $(".insumo").prop('disabled', true); 
+    var divs = document.getElementsByClassName("select2-selection__choice").length;
+    console.log("Hay " + divs + " elementos");
+
 });
+$('.tecnica').on('select2:clearing', function(evt) {
+        $(".insumo").prop('disabled', false); 
+});
+$('.tecnica').on('select2:unselect', function(e) {
+    var divs = document.getElementsByClassName("select2-selection__choice").length;
+    console.log("Hay " + divs + " elementos");
+    if (divs == 0) {
+        $(".insumo").prop('disabled', false); 
+    }
+});
+
+
 $(function() {
     $(document).on('change', '.livesearch', function() {
         var value = $(this).val();
@@ -219,7 +262,82 @@ $(function() {
         })
     })
 })
+$(function() {
+    $('.btnguion').click(function() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
 
+        swalWithBootstrapButtons.fire({
+            title: 'Guion',
+            text: "¿Desea guardar guión?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                var id = $(this).data('id');
+                var enca = $("#guion").val();
+                var first_cod = $("#first_cod").val();
+                var ind_cod = $("#ind_cod").val();
+                var title = $("#title").val();
+                var description = $("#description").val();
+
+                console.log(id);
+                Swal.fire({
+                    title: "¡Exito!",
+                    text: 'Dato Guardado',
+                    type: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/metodoGuion',
+                    data: {
+                        'id': id,
+                        'enca': enca,
+                        'first_cod': first_cod,
+                        'ind_cod': ind_cod,
+                        'title': title,
+                        'description': description
+
+                    },
+                    success: function(data) {
+
+                    }
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+
+            ) {
+                var id = $(this).data('id');
+                swalWithBootstrapButtons.fire(
+                    'Cancelado',
+                    'No hubo cambio :)',
+                    'error'
+                )
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            }
+        })
+    })
+})
 
 $(document).ready(function() {
     $("#principal").on("change", function() {

@@ -11,7 +11,7 @@ class Principal extends Model
     protected $fillable = ['title_cli', 'title_adm', 'description_cli', 'title_image', 'image_pri', 'description_adm'];
 
     public function getUrlPathAttribute(){
-        return \Storage::url($this->image);
+        return \Storage::url($this->image_pri);
     }
 
 }

@@ -32,7 +32,7 @@
           <div class="px-4 sm:px-0">
           <h3 class="font-weight-bold">Creación de Técnicas</h3>
             <p class="mt-1 text-sm text-gray-600">
-              Selecciona la tecnica principal para representar a la siguiente.
+              Selecciona el Encabezado para representar a la siguiente.
               Digite el indice de dos digitos en adelante ejemplo: (1.1, 1.1.3).
               El campo imagen es opcional.
             </p>

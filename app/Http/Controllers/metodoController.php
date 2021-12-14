@@ -124,7 +124,7 @@ class metodoController extends Controller
             ->get();
         return view('metodos.list', compact('list'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -133,14 +133,38 @@ class metodoController extends Controller
     public function create()
     {
         //RETORNAR A ARCHIVO DE CREACIÓN
+        $metodo = \DB::table("metodos")
+        ->whereRaw('LENGTH(ind_cod) >= 6')->get();
+        $metodoall = DB::table("metodos")->orderby('created_at','DESC')->take(1)->get();
+
+        $metodoPGuion = \DB::table('metodos')
+            ->whereNull('metodos.ind_cod')
+            ->orderBy('title', 'desc')
+            ->get();
         $metodoP = \DB::table('metodos')
             ->whereNull('metodos.ind_cod')
             ->orderBy('title', 'desc')
             ->get();
-        return view('metodos.create', compact('metodoP'));
+        return view('metodos.create', compact('metodoP', 'metodo', 'metodoall', 'metodoPGuion'));
+    }
+    public function metodoGuion(Request $request){
+        \Log::info($request->all());
+        $fecha = Carbon::now();
+        $datos = "-";
+        $user = Auth::user()->id;
+        $metodo = Metodo::create([
+            'first_cod' => $request->enca,
+            'ind_cod' => $datos,
+            'title' => $datos,
+            'description' => $datos,
+            'creation_date' => $fecha,
+            'id_user' => $user
+
+        ]);
+        return response()->json(['success'=>'Estado de usuario actualizado.']);
     }
     public function predecesor($id){
-        $predecesor = \DB::table("metodos")->where("first_cod",$id)->whereRaw('LENGTH(ind_cod) <= 5')->get();
+        $predecesor = \DB::table("metodos")->where("first_cod",$id)->whereRaw('LENGTH(ind_cod) <= 5 AND LENGTH(ind_cod) >= 2')->get();
         return json_encode($predecesor);
     }
     public function store(Request $request)
@@ -188,8 +212,8 @@ class metodoController extends Controller
             }
             $metodo->insumo()->attach($request->id_insumo);
             $metodo->tecnica()->attach($request->id_tecnica);
-            return redirect(route('metodos.index'))
-                ->with('success', '¡Registro creado!');
+            return redirect()->back()
+            ->with('success', '¡Registro creado!');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', '¡Error al insertar!');
@@ -213,17 +237,14 @@ class metodoController extends Controller
             ->orderBy('metodos.ind_cod', 'asc')
             ->paginate(10);
         $show = \DB::table('metodos')
-            /*->select("metodos.ind_cod AS indice", "title", "description",
-        "categoria_id", "title_tec", "description_tec", "title_ins", "description_ins", "insumo_metodo.insumo_id", "insumo_metodo.metodo_id", "insumo_metodo.tecnica_id")*/
             ->leftjoin('insumo_metodo', 'insumo_metodo.metodo_id', '=', 'metodos.id')
-            ->leftjoin('metodo_tecnica', 'metodos.id', '=', 'metodo_tecnica.metodo_id')
+            ->leftjoin('metodo_tecnica', 'metodo_tecnica.metodo_id', '=','metodos.id')
             ->leftjoin('insumos', 'insumos.id', '=', 'insumo_metodo.insumo_id')
             ->leftjoin('tecnicas', 'tecnicas.id', '=', 'metodo_tecnica.tecnica_id')
             ->where('metodos.first_cod', '=', $id)
-            ->orderBy('metodos.ind_cod', 'asc')
             ->get();
 
-        //dd($showpre);
+        //dd($show);
         //SELECT * FROM metodos A left join det_metodo B ON B.id_metodo = A.id WHERE A.first_cod = 1 ORDER BY `ind_cod`
         return view('show', compact('show', 'list'))->with('show', $show, 'list', $list);
     }
@@ -284,8 +305,8 @@ class metodoController extends Controller
             ->orderBy('title', 'desc')
             ->get();
             $insumos = Insumo::all();
-        $predecesor = \DB::table('metodos')
-            ->whereRaw('LENGTH(ind_cod) <= 5')->get();
+            $predecesor = \DB::table("metodos")->where("first_cod",$metodo)->whereRaw('LENGTH(ind_cod) <= 5')->get();
+        
             $li = \DB::table('metodos')
             ->select("metodos.id AS id_metodo", "metodos.first_cod AS metodo_p", "ind_cod", "title")
             ->whereNull('metodos.ind_cod')
@@ -339,6 +360,8 @@ class metodoController extends Controller
                 ]);
                 if ($request->filled('id_insumo')) {
                     $metodo->insumo()->detach($request->id);
+                }
+                if ($request->filled('id_tecnica')) {
                     $metodo->tecnica()->detach($request->id);
                 }
             }

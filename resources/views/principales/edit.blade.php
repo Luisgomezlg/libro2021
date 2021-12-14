@@ -52,6 +52,8 @@
                     <div class="flex text-sm text-gray-600">
                             <label class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                             @if($principal->image_pri != NULL)<img id="imagenSeleccionada" src="/image/{{ $principal->image_pri }}" width="150" alt=""/>  @else @endif 
+                            <img style="display:none;" id="imagenSeleccionada" src="#" width="150" alt=""/>  
+
                             <span>Subir imagen</span>
                               <input type="file" name="image_pri" id="image_pri">
                               <p class="pl-1">o arrastrar y soltar</p>
@@ -114,6 +116,8 @@
                     $('#imagenSeleccionada').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(this.files[0]);
+                $("#imagenSeleccionada").css("display", "block");
+
             });
         });
     </script>

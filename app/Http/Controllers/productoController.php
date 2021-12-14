@@ -25,7 +25,7 @@ class productoController extends Controller
         $list = \DB::table('insumos')
         ->where("title_ins", 'like', '%' . $request->search . "%")
         ->orderBy('insumos.title_ins', 'asc')
-        ->paginate(20);
+        ->get();
 
         return view('productos.list', ['list' => $list], compact('list'));
     }

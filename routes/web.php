@@ -21,13 +21,14 @@ Route::put('/password/{user}', 'userController@password')->name('users.password'
 Route::group(['middleware' => 'administrador'], function () {
 
     //METODOS
+
     Route::get('/metodos', 'metodoController@index')->name('metodos.index')->middleware('auth');
     Route::get('/metodos/create/', 'metodoController@create')->middleware('auth');
     Route::get('/metodos/{metodo}/edit', ['as' => 'metodos.edit', 'uses' => 'metodoController@edit'])->middleware('auth');
     Route::post('/metodos/store', 'metodoController@store')->middleware('auth');
     Route::put('/metodos/{metodo}', 'metodoController@update')->name('metodos.update')->middleware('auth');
     Route::post('/metodos/{id}', 'metodoController@destroy')->middleware('auth');
-
+    Route::get('metodoGuion', 'metodoController@metodoGuion');
 
     Route::get('/metodos/create/{id}', ['as' => 'metodos.predecesor', 'uses' => 'metodoController@predecesor'])->middleware('auth');
 
@@ -48,7 +49,7 @@ Route::group(['middleware' => 'administrador'], function () {
 
     Route::post('/users/store', 'userController@store')->middleware('auth');
     Route::post('/users/{id}', 'userController@destroy')->name('users.destroy')->middleware('auth');
-    
+
     Route::put('/users/{user}', 'userController@update')->name('users.update')->middleware('auth');
     Route::get('userChangeStatus', 'userController@userChangeStatus');
 
@@ -67,13 +68,13 @@ Route::group(['middleware' => 'administrador'], function () {
     Route::post('/tecnicas/store', 'tecnicaController@store')->middleware('auth');
     Route::put('/tecnicas/{tecnica}', 'tecnicaController@update')->name('tecnicas.update')->middleware('auth');
     Route::post('/tecnicas/{id}', 'tecnicaController@destroy')->middleware('auth');
-    
+
     //DELETE IMAGENES
     Route::post('/tecnicas-imageDelete/{tecnica}', 'tecnicaController@imageDelete')->middleware('auth');
     Route::post('/categorias-imageDelete/{categoria}', 'categoriaController@imageDelete')->middleware('auth');
-    Route::post('/metodos-imageDelete/{metodo}', 'metodoController@imageDelete')->middleware('auth'); 
-    Route::post('/metodosP-imageDelete/{metodoP}', 'metodoPController@imageDelete')->middleware('auth'); 
-    Route::post('/productos-imageDelete/{producto}', 'productoController@imageDelete')->middleware('auth'); 
+    Route::post('/metodos-imageDelete/{metodo}', 'metodoController@imageDelete')->middleware('auth');
+    Route::post('/metodosP-imageDelete/{metodoP}', 'metodoPController@imageDelete')->middleware('auth');
+    Route::post('/productos-imageDelete/{producto}', 'productoController@imageDelete')->middleware('auth');
 
     //PRODUCTOS
     Route::get('/productos', 'productoController@index')->name('productos.index')->middleware('auth');
@@ -95,6 +96,10 @@ Route::group(['middleware' => 'administrador'], function () {
     Route::get('/insumos_metodos', 'InsumoMetodoController@index')->name('insumos_metodos.index')->middleware('auth');
     Route::get('/insumos_metodos/{insumo_metodo}/edit', ['as' => 'insumos_metodos.edit', 'uses' => 'InsumoMetodoController@edit'])->middleware('auth');
 
+    //TÉCNICAS X METODOS 
+    Route::get('/tecnicas_metodos', 'TecnicaMetodoController@index')->name('tecnicas_metodos.index')->middleware('auth');
+    Route::get('/tecnicas_metodos/{tecnica_metodo}/edit', ['as' => 'tecnicas_metodos.edit', 'uses' => 'TecnicaMetodoController@edit'])->middleware('auth');
+
     //METODOS PRINCIPALES
     Route::get('/tecnicasP', 'tecnicaPController@index')->name('tecnicasP.index')->middleware('auth');
     Route::get('/tecnicasP/create', 'tecnicaPController@create')->middleware('auth');
@@ -106,11 +111,10 @@ Route::group(['middleware' => 'administrador'], function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/dashboard', 'principalController@principalesAdm')->middleware('auth'); 
-
+    Route::get('/dashboard', 'principalController@principalesAdm')->middleware('auth');
 });
 //PRINCIPALES
-Route::get('/', 'principalController@principales')->middleware('auth'); 
+Route::get('/', 'principalController@principales')->middleware('auth');
 /*
 Route::get('/', function () {
     return view('welcome');
@@ -126,7 +130,7 @@ Route::get('/categorias-list', 'categoriaController@categorias')->middleware('au
 Route::get('/categorias-list', 'categoriaController@search')->name('search')->middleware('auth');;
 Route::get('/productos-list', 'productoController@search')->name('search')->middleware('auth');;
 Route::get('/tecnicas-list', 'tecnicaController@search')->name('search')->middleware('auth');;
-Route::get('/metodos-list', 'metodoController@search')->name('search')->middleware('auth');; 
+Route::get('/metodos-list', 'metodoController@search')->name('search')->middleware('auth');;
 
 Route::get('/categorias_tecnicas', 'categoriaController@searchC')->name('searchC')->middleware('auth');;
 

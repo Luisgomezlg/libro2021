@@ -86,7 +86,7 @@
                   </div>
                   <div id="predecesor" style="display: none" class="col-span-6 sm:col-span-2">
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Predecesor</label>
-                    <select id="prede" name="" autocomplete="country" class="mt-1 prede focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <select id="prede" name="pred" autocomplete="country" class="mt-1 prede focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                       @foreach($predecesor as $pre)
                       <option class="option"  value="{{$pre->title}}">{{$pre->title}}</option>
                       @endforeach
@@ -117,6 +117,7 @@
                     <div class="flex text-sm text-gray-600">
                       <label class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                         @if ($metodo->image_met != null)<img id="imagenSeleccionada" src="/image/{{ $metodo->image_met }}" width="150" alt="" />@else @endif
+                        <img style="display:none;" id="imagenSeleccionada" src="#" width="150" alt=""/>  
                         <span>Subir imagen</span>
                         <input type="file" class="container" name="image_met" id="image_met">
                         <p class="pl-1">o arrastrar y soltar</p>
@@ -170,6 +171,7 @@
             $('#imagenSeleccionada').attr('src', e.target.result);
           }
           reader.readAsDataURL(this.files[0]);
+          $("#imagenSeleccionada").css("display", "block");
         });
       });
     </script>

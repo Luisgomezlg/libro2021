@@ -1,15 +1,13 @@
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
-    <meta name="keywords" content="admin, dashboard, template, react, reactjs, html, jquery, clean">
-    <meta name="author" content="nK">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <title>Vistas PDF</title>
 </head>
 
 <style>
+    *{
+        font-family: Arial, Helvetica, sans-serif
+    }
     #accordion {
         background-image: url("../public/images/fondo-osvaldo.png");
     }
@@ -17,8 +15,6 @@
     border-radius: 50% !important;
 }
 </style>
-
-<body>
 
     <div class="m-5 mt-5">
         @foreach ($list as $li)
@@ -46,7 +42,7 @@
         @foreach ($list as $li)
         @if (Request::is('metodos-list/*'))
         @foreach ($list as $li)
-        <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" href="{{ action('metodoController@createPDF', $li->first_cod) }}">
+        <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" target="_blank" href="{{ action('metodoController@createPDF', $li->first_cod) }}">
             <span stroke-width="1.5" data-feather="arrow-left"></span> Convertir a PDF
         </a>
         @endforeach
@@ -57,7 +53,7 @@
         @foreach ($list as $li)
         @if (Request::is('tecnicas-list/*'))
         @foreach ($list as $li)
-        <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" href="{{ action('tecnicaController@createPDF', $li->first_cod_tec) }}">
+        <a class="btn btn btn-outline-dark border-dark btn-sm back mb-5 pdf" target="_blank" href="{{ action('tecnicaController@createPDF', $li->first_cod_tec) }}">
             <span stroke-width="1.5" data-feather="arrow-left"></span> Convertir a PDF
         </a>
         @endforeach
@@ -75,7 +71,7 @@
                     <div id="accordion" class="">
                         @foreach(App\Models\Principal::where('id', '=', 1)->get() as $p)
                         @if($p->image_pri == NULL) @else
-                        <div id="image_pri" class="text-center mb-5"><img src="../public/image/{{ $p->image_pri }}" width="250px"></div>
+                        <div  style="text-align: center" id="image_pri"><img src="../public/image/{{ $p->image_pri }}" width="250px"></div>
                         @endif
                         @endforeach
                         @foreach ($show as $li)
@@ -108,7 +104,7 @@
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
                             <p>{!! nl2br(e($li->description_tec)) !!}</p>
-                            @if($li->image_tec == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_tec }}"><img src="../public/image/{{ $li->image_tec }}" width="200px"></a>@endif
+                            @if($li->image_tec == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_tec }}"><img src="../public/image/{{ $li->image_tec }}" width="500px"></a>@endif
                             <!--<a class="btn btn-secundary fs-1" href="{{ action('tecnicaController@show', $li->first_cod_tec) }}"
                                                   target="_blank">Ver {{ $li->title_tec }}</a>-->
                             </p>
@@ -116,7 +112,7 @@
                         @else
                         <div id="collapseOne" style="display: none;" style="margin-bottom: -370px;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
-                                @if($li->image_tec == NULL) @else<img src="../public/image/{{ $li->image_tec }}" width="200px">@endif
+                                @if($li->image_tec == NULL) @else<img src="../public/image/{{ $li->image_tec }}" width="500px">@endif
                             </p>
                         </div>
                         @endif
@@ -159,12 +155,12 @@
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="card-body">
                                 @if($li->title == 'predecesor' || $li->title == 'Predecesor')
-                                <a class="btn btn-secundary fs-1 text-primary" href="{{ action('metodoController@showpre', $li->predecesor_met ) }}" target="_blank">{{$li->description}}</a>
+                                <p class="font-weight-bold">{!! nl2br(e($li->description)) !!}</p>
                                 @else
                                 {!! nl2br(e($li->description)) !!}
                                 @endif
                                 <br>
-                            <p class="mt-3">@if($li->image_met == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img src="../public/image/{{ $li->image_met }}" width="200px"></a>@endif</p>
+                            <p class="mt-3">@if($li->image_met == NULL) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img src="../public/image/{{ $li->image_met }}" width="500px"></a>@endif</p>
 
                             </p>
                         </div>
@@ -179,19 +175,13 @@
                         @endif
                         @endif
                         @endforeach
-                        <div class="text-center mt-5">
-                            <p class="text-center">www.osvaldolaurido.com</p>
-                            <p style="font-size: 20px" class="mt-5">© Osvaldo Laurido &amp; Associates 2022</p>
+                        <div style="margin-top: 1em;">
+                            <p style="text-align: center">www.osvaldolaurido.com</p>
+                            <p  style="text-align: center; font-size: 20px">© Osvaldo Laurido &amp; Associates 2022</p>
                         </div>
                     </div>
                 </dl>
             </div>
         </div>
     </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script>
-    $(document).ready(function() {
 
-    })
-</script>

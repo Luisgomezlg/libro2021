@@ -24,11 +24,39 @@
           <div class="px-4 sm:px-0">
             <h3 class="font-weight-bold">Creación De Metodos</h3>
             <p class="mt-1 text-sm text-gray-600">
-              Selecciona el metodo principal para representar el siguiente.
+              Selecciona el Encabezado para representar el siguiente.
               Digite el indice de dos digitos en adelante ejemplo: (1.1, 1.1.3).
               El campo imagen, insumo y tecnica es opcional.
             </p>
           </div>
+            <div class="shadow overflow-hidden sm:rounded-md mt-10">
+              <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+                  <div class="col-span-6 sm:col-span-6">
+                    <label for="last-name" class="block text-sm font-medium text-gray-700">Guiones</label>
+                    <div class="col-span-6 sm:col-span-2">
+                      @foreach ($metodoall as $m)
+                      @if($metodoall->last() == $metodo->last())
+                        <p class="guion">Tienes un guión pendiente</p>
+                        @else
+                        <p>No tienes guiones</p>
+                      @endif
+                      @endforeach
+                    </div>
+                    <div class="col-span-6 sm:col-span-2">
+                      <label for="first-name" class="block text-sm font-medium text-gray-700">Encabezado De Métodos</label>
+                      <select id="guion" name="guion" autocomplete="country" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <option value="">Seleccionar</option>
+                        @foreach($metodoPGuion as $met)
+                        <option class="option" value="{{$met->id}}">{{$met->title}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <button id="btnguion" type="button" class="btn btn-success mt-10 btnguion btn-sm">Agregar Guión</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
           <form action="{{ action('metodoController@store')}}" method="post" enctype="multipart/form-data">
@@ -37,7 +65,7 @@
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-2">
-                    <label for="first-name" class="block text-sm font-medium text-gray-700">Seleccionar</label>
+                    <label for="first-name" class="block text-sm font-medium text-gray-700">Seleccionar Detalle</label>
                     <select id="select_pre" name="select_pre" autocomplete="country" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                       <option class="option" value="">Seleccionar</option>
                       <option class="option" id="" value="1">Predecesor</option>

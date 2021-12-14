@@ -18268,6 +18268,10 @@ select [type="search"] {
     border: none;
 }
 
+.swal2-popup .swal2-title {
+    text-transform: initial;
+}
+
 
 /*.met:hover{
     color: #fff;

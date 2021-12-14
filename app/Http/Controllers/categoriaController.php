@@ -112,6 +112,7 @@ class categoriaController extends Controller
         //RETORNAR A ACORDEÓN CON TECNICAS
         $show = \DB::table('tecnicas')
             ->where('tecnicas.categoria_id', '=', $id)
+            ->orderBy('tecnicas.title_tec', 'asc')
             ->get();
         //dd($metodo);
         return view('show3', compact('show'));

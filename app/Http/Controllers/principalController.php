@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Principal;
+use Image;
 
 class principalController extends Controller
 {
@@ -61,6 +62,7 @@ class principalController extends Controller
                 $imageName = time() . '.' . $request->image_pri->extension();
 
                 $request->image_pri->move(public_path('image'), $imageName);
+
 
                 $principal = Principal::create([
                     'title_cli' => $request->title_cli,

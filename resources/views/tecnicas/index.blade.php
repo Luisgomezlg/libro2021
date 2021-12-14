@@ -32,11 +32,11 @@
                   <tr>
                     <th>#</th>
                     <th>Encabezado De Técnica</th>
+                    <th>Indice</th>
                     <th>Título</th>
                     <th class="description">Descripción</th>
                     <th>Fecha</th>
                     <th>Gráfico</th>
-                    <th>Usuario</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -48,6 +48,9 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div class="text-sm text-gray-900">@foreach($li as $l) @if($l->tecnica_p == $tec->first_cod_tec){{$l->title_tec}} @endif @endforeach</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div class="text-sm text-gray-900">{{$tec->ind_cod_tec}}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div class="text-sm text-gray-900">{{$tec->title_tec}}</div>
@@ -64,9 +67,6 @@
                          <a target="_blank" href="{{ URL::to('/') }}/image/{{ $tec->image_tec }}"><img src="/image/{{ $tec->image_tec }}" width="100px"></a>
                          @endif
                       </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div class="text-sm text-gray-900">{{$tec->id_user}}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a class="btn btn-edit" onclick="window.location='{{ route('tecnicas.edit', $tec->id) }}'"><span stroke-width="1.5" data-feather="edit"></span></a>
