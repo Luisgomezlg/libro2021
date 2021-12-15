@@ -136,7 +136,7 @@ class metodoController extends Controller
         $metodo = \DB::table("metodos")
         ->whereRaw('LENGTH(ind_cod) >= 6')->get();
         $metodoall = DB::table("metodos")->orderby('created_at','DESC')->take(1)->get();
-
+        
         $metodoPGuion = \DB::table('metodos')
             ->whereNull('metodos.ind_cod')
             ->orderBy('title', 'desc')
@@ -297,21 +297,37 @@ class metodoController extends Controller
      */
 
 
-    public function edit(Metodo $metodo)
+    public function edit($metodo)
     {
         //RETORNAR A ARCHIVO DE EDICCIÓN
+
         $metodoP = \DB::table('metodos')
-            ->whereNull('metodos.ind_cod')
-            ->orderBy('title', 'desc')
-            ->get();
-            $insumos = Insumo::all();
+        ->where('id', $metodo)
+        ->orderBy('title', 'desc')
+        ->get();
+        $encabezados = \DB::table('metodos')
+        ->whereNull('metodos.ind_cod')
+        ->orderBy('title', 'desc')
+        ->get();
+
+        //dd($metodoP);
+        $metodos = Metodo::where('id', $metodo)->first();
+        $insumos = Metodo::select("insumos.id", "insumos.title_ins")
+            ->leftjoin('insumo_metodo', 'insumo_metodo.metodo_id', '=', 'metodos.id')
+            ->leftjoin('insumos', 'insumos.id', '=', 'insumo_metodo.insumo_id')
+            ->where('metodos.id', '=', $metodo)->get();
+        $tecnicas = Metodo::select("tecnicas.id", "tecnicas.title_tec")
+            ->leftjoin('metodo_tecnica', 'metodo_tecnica.metodo_id', '=', 'metodos.id')
+            ->leftjoin('tecnicas', 'tecnicas.id', '=', 'metodo_tecnica.tecnica_id')
+            ->where('metodos.id', '=', $metodo)->get();
+        //dd($tecnicas);
             $predecesor = \DB::table("metodos")->where("first_cod",$metodo)->whereRaw('LENGTH(ind_cod) <= 5')->get();
         
             $li = \DB::table('metodos')
             ->select("metodos.id AS id_metodo", "metodos.first_cod AS metodo_p", "ind_cod", "title")
             ->whereNull('metodos.ind_cod')
             ->get();
-        return view("metodos.edit", compact('metodo', 'metodoP', 'predecesor', 'insumos', 'li'));
+        return view("metodos.edit", compact('metodos', 'encabezados', 'tecnicas', 'metodo', 'metodoP', 'predecesor', 'insumos', 'li'));
     }
 
     /**

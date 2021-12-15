@@ -18272,6 +18272,10 @@ select [type="search"] {
     text-transform: initial;
 }
 
+.select2-selection__choice__display {
+    font-size: 80%;
+}
+
 
 /*.met:hover{
     color: #fff;

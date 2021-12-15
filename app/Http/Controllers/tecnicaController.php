@@ -218,18 +218,25 @@ class tecnicaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tecnica $tecnica)
+    public function edit($tecnica)
     {
         //RETORNAR A ARCHIVO DE EDICCIÓN
         $tecnicaP = \DB::table('tecnicas')
+        ->where('id', $tecnica)
+        ->orderBy('title_tec', 'desc')
+        ->get();
+        $encabezados = \DB::table('tecnicas')
         ->whereNull('tecnicas.ind_cod_tec')
         ->orderBy('title_tec', 'desc')
         ->get();
+        $tecnicas = Tecnica::where('id', $tecnica)->first();
+        //dd($tecnicaP);
         $li = \DB::table('tecnicas')
             ->select("tecnicas.first_cod_tec AS tecnica_p", "ind_cod_tec", "title_tec")
             ->whereNull('tecnicas.ind_cod_tec')
             ->get();
-        return view("tecnicas.edit", compact('tecnica', 'tecnicaP', 'li'));
+            
+        return view("tecnicas.edit", compact('tecnica', 'tecnicas', 'encabezados', 'tecnicaP', 'li'));
     }
     public function imageDelete(Tecnica $tecnica)
     {

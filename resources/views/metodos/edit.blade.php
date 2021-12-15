@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-          <form action="{{ route('metodos.update', $metodo->id) }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('metodos.update', $metodo) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="shadow overflow-hidden sm:rounded-md">
@@ -60,7 +60,7 @@
                   <div class="col-span-6 sm:col-span-2">
                     <label for="last-name" class="block text-sm font-medium text-gray-700">Actual Encabezado</label>
                     @foreach($li as $l) 
-                    @if($l->id_metodo == $metodo->first_cod)
+                    @if($l->id_metodo == $metodos->first_cod)
                     <input type="text" disabled name="" value="{{$l->title}}" id="" autocomplete="family-name" class="mt-1 bg-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     @endif 
                     @endforeach                  
@@ -79,8 +79,11 @@
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Encabezado De Método</label>
                     <select id="id_metodo" name="id_metodo" autocomplete="country" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                       <option value="">Seleccionar</option>
+                      @foreach($encabezados as $enc)
+                      <option class="option" id="col{{ $enc->first_cod }}" value="{{ $enc->first_cod }}">{{$enc->title}}</option>
+                      @endforeach
                       @foreach ($metodoP as $met)
-                      <option class="option" id="col{{ $met->id }}" value="{{ $met->id }}">{{ $met->title }}</option>
+                      @foreach($li as $l) @if($l->metodo_p == $met->first_cod)<option class="option" id="col{{ $met->first_cod }}" selected="selected" value="{{ $met->first_cod }}">{{$l->title}}</option> @endif @endforeach
                       @endforeach
                     </select>
                   </div>
@@ -94,12 +97,12 @@
                   </div>
                   <div class="col-span-6 sm:col-span-2">
                     <label for="last-name" class="block text-sm font-medium text-gray-700">Indice</label>
-                    <input type="text" name="ind_cod" value="{{ $metodo->ind_cod }}" id="ind_cod" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md disabled:opacity-50">
+                    <input type="text" name="ind_cod" value="{{ $metodos->ind_cod }}" id="ind_cod" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md disabled:opacity-50">
                   </div>
 
                   <div id="titulo" class="col-span-6 sm:col-span-2">
                     <label for="last-name" class="block text-sm font-medium text-gray-700">Título</label>
-                    <input type="text" name="title" id="title" value="{{ $metodo->title }}" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="title" id="title" value="{{ $metodos->title }}" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                   </div>
 
                   <div class="description col-span-6 sm:col-span-6">
@@ -108,7 +111,7 @@
                     </label>
                     <div class="mt-1">
                       <textarea id="description" name="description" rows="12" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md text-start" placeholder="">
-                        {{$metodo->description}}
+                        {{$metodos->description}}
                         
                       </textarea>
                     </div>
@@ -116,7 +119,7 @@
                   <div class="col-span-6 sm:col-span-2">
                     <div class="flex text-sm text-gray-600">
                       <label class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                        @if ($metodo->image_met != null)<img id="imagenSeleccionada" src="/image/{{ $metodo->image_met }}" width="150" alt="" />@else @endif
+                        @if ($metodos->image_met != null)<img id="imagenSeleccionada" src="/image/{{ $metodos->image_met }}" width="150" alt="" />@else @endif
                         <img style="display:none;" id="imagenSeleccionada" src="#" width="150" alt=""/>  
                         <span>Subir imagen</span>
                         <input type="file" class="container" name="image_met" id="image_met">
@@ -124,28 +127,32 @@
                       </label>
                     </div>
                     <form onsubmit="submitForm(event)">
-                      <button type="button" class="btn btn-danger btn-sm" onclick="imageDeleteMetodo({{$metodo->id}})">Eliminar Imagen</button>
+                      <button type="button" class="btn btn-danger btn-sm" onclick="imageDeleteMetodo({{$metodos->id}})">Eliminar Imagen</button>
                     </form>
                   </div>
                   <div class="col-span-6 sm:col-span-2">
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Insumo/Producto</label>
                     <select id="id_insumo" name="id_insumo[]" multiple="multiple" autocomplete="country" class="insumo mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      <span class="selection">{{ $metodo->id_insumo }}</span>
+                      @foreach ($insumos as $tag)
+                      <option value="{{ $tag->id }}" selected="selected">{{ $tag->title_ins }}</option>
+                      @endforeach
+                      
                     </select>
                   </div>
 
                   <div class="col-span-6 sm:col-span-2">
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Tecnica</label>
-                    <select id="id_tecnica" name="id_tecnica[]" value="{{ $metodo->id_tecnica }}" multiple="multiple" autocomplete="country" class="tecnica mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                      <span class="select2-selection__choice__display" id="select2-id_insumo-container-choice-k4fp-1">{{ $metodo->id_tecnica }}</span>
-
+                    <select id="id_tecnica" name="id_tecnica[]" multiple="multiple" autocomplete="country" class="tecnica mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                      @foreach ($tecnicas as $tag)
+                      <option value="{{ $tag->id }}" selected="selected">{{ $tag->title_tec }}</option>
+                      @endforeach
                     </select>
                   </div>
 
                   <div class="col-span-2">
                     <label for="street-address" class="block text-sm font-medium text-gray-700">Fecha de
                       actualización</label>
-                    <input type="date" name="creation_date" value="{{ $metodo->creation_date }}" id="creation_date" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="date" name="creation_date" value="{{ $metodos->creation_date }}" id="creation_date" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                   </div>
 
                 </div>

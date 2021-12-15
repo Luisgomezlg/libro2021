@@ -113,6 +113,8 @@ $('.livesearch').select2({
 $('.insumo').select2({
     placeholder: 'Selecciona el Insumo',
     allowClear: true,
+    multiple: true,
+    tokenSeparators: [','],
     ajax: {
         url: '/ajax-insumo',
         dataType: 'json',
@@ -130,20 +132,21 @@ $('.insumo').select2({
         },
         cache: true
     }
-}).on("select2:select", function (e) {
-    $(".tecnica").prop('disabled', true); 
+}).on("select2:select", function(e) {
+    $(".tecnica").prop('disabled', true);
     var divs = document.getElementsByClassName("select2-selection__choice").length;
-    console.log("Hay " + divs + " elementos");
+    //console.log("Hay " + divs + " elementos");
 
 });
+
 $('.insumo').on('select2:clearing', function(evt) {
-        $(".tecnica").prop('disabled', false); 
+    $(".tecnica").prop('disabled', false);
 });
 $('.insumo').on('select2:unselect', function(e) {
     var divs = document.getElementsByClassName("select2-selection__choice").length;
-    console.log("Hay " + divs + " elementos");
+    //console.log("Hay " + divs + " elementos");
     if (divs == 0) {
-        $(".tecnica").prop('disabled', false); 
+        $(".tecnica").prop('disabled', false);
     }
 });
 
@@ -168,20 +171,20 @@ $('.tecnica').select2({
         },
         cache: true
     }
-}).on("select2:select", function (e) {
-    $(".insumo").prop('disabled', true); 
+}).on("select2:select", function(e) {
+    $(".insumo").prop('disabled', true);
     var divs = document.getElementsByClassName("select2-selection__choice").length;
     console.log("Hay " + divs + " elementos");
 
 });
 $('.tecnica').on('select2:clearing', function(evt) {
-        $(".insumo").prop('disabled', false); 
+    $(".insumo").prop('disabled', false);
 });
 $('.tecnica').on('select2:unselect', function(e) {
     var divs = document.getElementsByClassName("select2-selection__choice").length;
     console.log("Hay " + divs + " elementos");
     if (divs == 0) {
-        $(".insumo").prop('disabled', false); 
+        $(".insumo").prop('disabled', false);
     }
 });
 
