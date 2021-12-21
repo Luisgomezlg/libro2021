@@ -59,7 +59,6 @@
                     @endphp
                     <div id="accordion" class="mb-5">
                         @foreach ($show as $li)
-
                         {{-- Validación insumo --}}
                         @if ($li->insumo_id != null)
                         @if ($bandera == 0)
@@ -71,13 +70,13 @@
 
                         <div id="collapseOne" style="display: block;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div style="display: block;">
-                                <a tabindex="0" class="btn btn-lg btn-success popover-dismiss text-white mb-3" role="button" data-toggle="popover" data-trigger="focus" 
+                                <a tabindex="0" style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary popover-dismiss fs-1 text-primary" role="button" data-toggle="popover" data-trigger="focus" 
                             title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
                             </div> 
                         @else
                             <div style="display: block;">
-                                <a tabindex="0" class="btn btn-lg btn-success popover-dismiss text-white mb-3" role="button" data-toggle="popover" data-trigger="focus" 
-                            title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
+                                <a tabindex="0" style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary popover-dismiss fs-1 text-primary" role="button" data-toggle="popover" data-trigger="focus" 
+                                title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
                             </div>
                             @endif
                             @else
@@ -110,7 +109,6 @@
                         @else
                         {{-- Validación técnica --}}
                         @if ($li->tecnica_id != null)
-
                         @if ($bandera1 == 0)
 
                         @php
@@ -166,13 +164,12 @@
                                 {!! nl2br(e($li->description)) !!}
                                 @endif
                                 <br>
-                                @if ($li->image_met == null) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img style="margin-left: 10%; width: 80%;" src="/image/{{ $li->image_met }}"></a>@endif
+                                <!--@if ($li->image_met == null) @else <a target="_blank" href="{{ URL::to('/') }}/image/{{ $li->image_met }}"><img style="margin-left: 10%; width: 80%;" src="/image/{{ $li->image_met }}"></a>@endif-->
                             </p>
                         </div>
                         @else
                         <div id="collapseOne" style="margin-bottom: -370px;" class="collapse border-0" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <p class="br card-body">
-
                             </p>
                         </div>
                         @endif
@@ -181,11 +178,9 @@
                         @endif
                         @endforeach
                     </div>
-
                 </dl>
             </div>
         </div>
-    </div>
-
+    </div>            
 </body>
 @endsection

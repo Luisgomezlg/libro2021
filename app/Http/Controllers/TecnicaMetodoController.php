@@ -95,8 +95,10 @@ class TecnicaMetodoController extends Controller
      * @param  \App\Models\TecnicaMetodo  $tecnicaMetodo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TecnicaMetodo $tecnicaMetodo)
+    public function destroy($id)
     {
         //
+        $metodo_tecnica = \DB::table("metodo_tecnica")->where('id', $id)->delete();
+        return back();
     }
 }

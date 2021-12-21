@@ -95,10 +95,12 @@ Route::group(['middleware' => 'administrador'], function () {
     //INSUMOS X METODOS 
     Route::get('/insumos_metodos', 'InsumoMetodoController@index')->name('insumos_metodos.index')->middleware('auth');
     Route::get('/insumos_metodos/{insumo_metodo}/edit', ['as' => 'insumos_metodos.edit', 'uses' => 'InsumoMetodoController@edit'])->middleware('auth');
+    Route::post('/insumos_metodos/{id}', 'InsumoMetodoController@destroy')->middleware('auth');
 
     //TÉCNICAS X METODOS 
     Route::get('/tecnicas_metodos', 'TecnicaMetodoController@index')->name('tecnicas_metodos.index')->middleware('auth');
     Route::get('/tecnicas_metodos/{tecnica_metodo}/edit', ['as' => 'tecnicas_metodos.edit', 'uses' => 'TecnicaMetodoController@edit'])->middleware('auth');
+    Route::post('/tecnicas_metodos/{id}', 'TecnicaMetodoController@destroy')->middleware('auth');
 
     //METODOS PRINCIPALES
     Route::get('/tecnicasP', 'tecnicaPController@index')->name('tecnicasP.index')->middleware('auth');

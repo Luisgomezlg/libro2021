@@ -95,8 +95,10 @@ class InsumoMetodoController extends Controller
      * @param  \App\Models\insumo_metodo  $insumo_metodo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(insumo_metodo $insumo_metodo)
+    public function destroy($id)
     {
         //
+        $insumo_metodo = \DB::table("insumo_metodo")->where('id', $id)->delete();
+        return back();
     }
 }

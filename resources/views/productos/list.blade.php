@@ -9,10 +9,8 @@
     <a class="btn btn-primary text-white back mb-5 rounded-circle" onclick="history.go(-1)">
         <span stroke-width="1.5" data-feather="arrow-left"></span>
     </a>
-    <a class="btn btn-secundary back mb-5 rounded-circle" href="/productos-list">
-        <span stroke-width="1.5" data-feather="home"></span>
-    </a>
-    <div class="mt-5 metodos">
+
+    <div class="mt-5 metodos product-l">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mx-auto">
         <div class="px-4 py-5 sm:px-6">
                 <h2 class="text-lg leading-6 font-medium text-primary font-weight-bold">
@@ -37,7 +35,9 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($list as $li)
                                 <tr>
-                                    <td><a href="" style="font-weight: bold; font-size: 19px;" onclick="window.location='{{ action('productoController@show', $li->id)}}'">{{$li->title_ins}}</a></td>
+                                    <td><a tabindex="0" style="font-size: 16px; text-transform:capitalize;" class="btn btn-secundary popover-dismiss fs-1 text-primary" role="button" data-toggle="popover" data-trigger="focus" 
+                                        title="{!! nl2br(e($li->title_ins)) !!}" data-content="{!! nl2br(e($li->description_ins)) !!}">{!! nl2br(e($li->title_ins)) !!}</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

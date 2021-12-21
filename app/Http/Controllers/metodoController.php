@@ -29,7 +29,7 @@ class metodoController extends Controller
             ->where("title", 'like', '%' . $request->search . "%")
             ->whereNull('metodos.ind_cod')
             ->orderBy('metodos.title', 'asc')
-            ->paginate(10);
+            ->get();
 
         return view('metodos.list', ['list' => $list], compact('list'));
     }
@@ -135,15 +135,15 @@ class metodoController extends Controller
         //RETORNAR A ARCHIVO DE CREACIÓN
         $metodo = \DB::table("metodos")
         ->whereRaw('LENGTH(ind_cod) >= 6')->get();
-        $metodoall = DB::table("metodos")->orderby('created_at','DESC')->take(1)->get();
+        $metodoall = DB::table("metodos")->orderby('created_at','ASC')->take(1)->get();
         
         $metodoPGuion = \DB::table('metodos')
             ->whereNull('metodos.ind_cod')
-            ->orderBy('title', 'desc')
+            ->orderBy('title', 'ASC')
             ->get();
         $metodoP = \DB::table('metodos')
             ->whereNull('metodos.ind_cod')
-            ->orderBy('title', 'desc')
+            ->orderBy('title', 'ASC')
             ->get();
         return view('metodos.create', compact('metodoP', 'metodo', 'metodoall', 'metodoPGuion'));
     }
@@ -196,6 +196,7 @@ class metodoController extends Controller
                     'id_user' => $user,
 
                 ]);
+             
                 //dd($metodo);
             } else {
                 $metodo = Metodo::create([
@@ -209,9 +210,36 @@ class metodoController extends Controller
                     'id_user' => $user,
 
                 ]);
+               
             }
             $metodo->insumo()->attach($request->id_insumo);
+            if (isset($request->id_insumo)) {
+                $datos = "-";
+                $user = Auth::user()->id;
+                $metodo2 = Metodo::create([
+                    'first_cod' => $request->id_metodo,
+                    'ind_cod' => $datos,
+                    'title' => $datos,
+                    'description' => $datos,
+                    'creation_date' => $fecha,
+                    'id_user' => $user
+
+                ]);
+            }
             $metodo->tecnica()->attach($request->id_tecnica);
+            if (isset($request->id_tecnica)) {
+                $datos = "-";
+                $user = Auth::user()->id;
+                $metodo2 = Metodo::create([
+                    'first_cod' => $request->id_metodo,
+                    'ind_cod' => $datos,
+                    'title' => $datos,
+                    'description' => $datos,
+                    'creation_date' => $fecha,
+                    'id_user' => $user
+
+                ]);
+            }
             return redirect()->back()
             ->with('success', '¡Registro creado!');
         } catch (\Exception $e) {

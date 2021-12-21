@@ -24,9 +24,10 @@ $('#example').DataTable({
     },
     "order": [],
     "lengthMenu": [
-        [15, 20, -1],
-        [10, 20, "Todos"] // change per page values here
+        [-1],
+        ["Todos"] // change per page values here
     ],
     responsive: true,
-    "bDestroy": true
+    "bDestroy": true,
+    reload: true
 });

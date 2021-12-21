@@ -67,11 +67,11 @@
                   </div>
                   
                   <div class="col-span-6 sm:col-span-2">
-                    <label for="first-name" class="block text-sm font-medium text-gray-700">Seleccionar</label>
+                    <label for="first-name" class="block text-sm font-medium text-gray-700">Tipo De Detalle</label>
                     <select id="select_pre" name="select_pre" autocomplete="country" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                       <option class="option" value="">Seleccionar</option>
-                      <option class="option" id="" value="1">Predecesor</option>
                       <option class="option" id="" value="2">Metodos o Insumos</option>
+                      <option class="option" id="" value="1">Predecesor</option>
                     </select>
                   </div>
                   
@@ -91,7 +91,7 @@
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Predecesor</label>
                     <select id="prede" name="pred" autocomplete="country" class="mt-1 prede focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                       @foreach($predecesor as $pre)
-                      <option class="option"  value="{{$pre->title}}">{{$pre->title}}</option>
+                      <option class="option" value="{{$pre->title}}">{{$pre->title}}</option>
                       @endforeach
                     </select>
                   </div>

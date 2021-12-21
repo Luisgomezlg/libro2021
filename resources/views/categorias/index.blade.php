@@ -21,6 +21,21 @@
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <div class="loader"></div>
+              <div class="rui-page-preloader loader" role="status">
+                  <div class="rui-page-preloader-inner">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                  </div>
+              </div>
               <table id="example" class="table table-striped table-bordered " style="width:100%">
                 <thead class="bg-gray-50">
                   <tr>

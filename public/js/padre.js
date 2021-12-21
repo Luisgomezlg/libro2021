@@ -56,6 +56,8 @@ $(document).ready(function() {
             [5, 10, 20, "Todos"] // change per page values here
         ],
         responsive: true,
+        ajax: '',
+
         "bDestroy": true
     });
     oTable2 = $('#exampleUsuario').DataTable({
@@ -142,6 +144,7 @@ $('.insumo').select2({
 $('.insumo').on('select2:clearing', function(evt) {
     $(".tecnica").prop('disabled', false);
 });
+
 $('.insumo').on('select2:unselect', function(e) {
     var divs = document.getElementsByClassName("select2-selection__choice").length;
     //console.log("Hay " + divs + " elementos");
@@ -154,6 +157,8 @@ $('.insumo').on('select2:unselect', function(e) {
 $('.tecnica').select2({
     placeholder: 'Selecciona la Técnica',
     allowClear: true,
+    multiple: true,
+    tokenSeparators: [','],
     ajax: {
         url: '/ajax-tecnica',
         dataType: 'json',
@@ -357,6 +362,8 @@ $(document).ready(function() {
     });
     $("#select_pre").on("change", function() {
         if ($("#select_pre").val() == '1') {
+            $("#title").prop("readonly", true);
+            $("#title").val("Predecesor");
             $("#predecesor").css("display", "block");
             $("#titulo").prop("readonly", true);
             $("#prede").on("change", function() {
@@ -365,6 +372,8 @@ $(document).ready(function() {
                 }
             })
         } else {
+            $("#title").prop("readonly", false);
+            $("#title").val("");
             $("#predecesor").css("display", "none");
             $("#titulo").css("display", "block");
         }

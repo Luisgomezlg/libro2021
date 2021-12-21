@@ -29,7 +29,7 @@
               El campo imagen, insumo y tecnica es opcional.
             </p>
           </div>
-            <div class="shadow overflow-hidden sm:rounded-md mt-10">
+            <!--<div class="shadow overflow-hidden sm:rounded-md mt-10">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-6">
@@ -56,7 +56,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>-->
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
           <form action="{{ action('metodoController@store')}}" method="post" enctype="multipart/form-data">
@@ -68,8 +68,8 @@
                     <label for="first-name" class="block text-sm font-medium text-gray-700">Seleccionar Detalle</label>
                     <select id="select_pre" name="select_pre" autocomplete="country" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                       <option class="option" value="">Seleccionar</option>
-                      <option class="option" id="" value="1">Predecesor</option>
                       <option class="option" id="" value="2">Metodos o Insumos</option>
+                      <option class="option" id="" value="1">Predecesor</option>
                     </select>
                   </div>
                   

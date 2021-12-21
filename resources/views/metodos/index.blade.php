@@ -22,6 +22,21 @@
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <div class="loader"></div>
+              <div class="rui-page-preloader loader" role="status">
+                  <div class="rui-page-preloader-inner">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                  </div>
+              </div>
               <table id="example" class="table table-striped table-bordered " style="width:100%">
                 <thead class="bg-gray-50">
                   <tr>
@@ -36,6 +51,9 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                   @foreach($metodo as $met)
+                  @if($met->ind_cod == "-" && $met->description == "-" || $met->ind_cod == "-" && $met->description == "-")
+
+                  @else
                   <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div class="text-sm text-gray-900">{{$met->id_metodo}}</div>
@@ -64,6 +82,7 @@
                       <a class="btn btn-delete" onclick="deleteMetodo({{$met->id_metodo}})" href=""><span stroke-width="1.5" data-feather="delete"></span></a>
                     </td>
                   </tr>
+                  @endif
                   @endforeach
                   <!-- More people... -->
                 </tbody>

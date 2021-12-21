@@ -38,21 +38,7 @@
 
 <body data-spy="scroll" data-target=".rui-page-sidebar" data-offset="140" class="caja rui-no-transition rui-navbar-autohide rui-section-lines">
     @include('sweetalert::alert')
-    <div class="loader"></div>
-    <div class="rui-page-preloader loader" role="status">
-        <div class="rui-page-preloader-inner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
+
     <div class="yaybar yay-hide-to-small yay-shrink yay-gestures rui-yaybar">
         <div class="yay-wrap-menu">
             <div class="yaybar-wrap">
@@ -633,6 +619,116 @@
                     $.ajax({
                         type: 'POST',
                         url: "{{ url('/productos') }}/" + id,
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: 'JSON',
+                        success: function(result) {
+
+                        }
+                    })
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'No hay problema :)',
+                        'error'
+                    )
+                }
+            })
+        }
+        //Insumo x metodo
+        function deleteInsumoMetodo(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    Swal.fire({
+                        title: "¡Exito!",
+                        text: 'Dato eliminado',
+                        type: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                    })
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ url('/insumos_metodos') }}/" + id,
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: 'JSON',
+                        success: function(result) {
+
+                        }
+                    })
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'No hay problema :)',
+                        'error'
+                    )
+                }
+            })
+        }
+        //Técnica x metodo
+        function deleteTecnicaMetodo(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    Swal.fire({
+                        title: "¡Exito!",
+                        text: 'Dato eliminado',
+                        type: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                    })
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ url('/tecnicas_metodos') }}/" + id,
                         data: {
                             "_token": "{{ csrf_token() }}"
                         },
