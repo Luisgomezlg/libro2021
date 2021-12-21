@@ -24,7 +24,7 @@ class CreateMetodosTable extends Migration
             $table->integer('id_tecnica')->nullable();
             $table->date('creation_date')->nullable();
             $table->integer('level')->nullable();
-            $table->integer('order')->nullable();
+            $table->integer('predecesor_met')->nullable();
             $table->integer('id_user')->nullable();
             $table->timestamps();
         });

@@ -134,7 +134,7 @@ class DatabaseSeeder extends Seeder
 
             [
                 'first_cod' => '1',
-                'ind_cod' => '',
+                'ind_cod' => NULL,
                 'title' => 'IMPLEMENTE LA VERTIENTE DE VALOR E-INGENIADA BIR',
                 'description' => 'El objetivo de esta etapa es planificar la implementación de la vertiente de valor rediseñada y poner en funcionamiento la misma.
                                   La implementación debe considerar los aspectos del cambio organizacional: gerencial, operativa, social y tecnológico.  
@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '1',
-                'order' => '1',
+                'predecesor_met' => '1',
                 'id_user' => 1,
             ],
             [
@@ -161,7 +161,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '2',
-                'order' => '2',
+                'predecesor_met' => '2',
                 'id_user' => 1,
             ],
             [
@@ -176,7 +176,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '3',
-                'order' => '2',
+                'predecesor_met' => '2',
                 'id_user' => 1,
             ],
             [
@@ -189,7 +189,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '1',
-                'order' => '1',
+                'predecesor_met' => '1',
                 'id_user' => 1,
             ],
             [
@@ -202,7 +202,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '2',
-                'order' => '2',
+                'predecesor_met' => '2',
                 'id_user' => 1,
             ],
             [
@@ -215,7 +215,7 @@ class DatabaseSeeder extends Seeder
                 'image_met' => '',
                 'creation_date' => $fecha,
                 'level' => '3',
-                'order' => '2',
+                'predecesor_met' => '2',
                 'id_user' => 1,
             ]
         ]);
@@ -223,7 +223,7 @@ class DatabaseSeeder extends Seeder
         DB::table('tecnicas')->insert([
             'categoria_id' => 1,
             'first_cod_tec' => '1',
-            'ind_cod_tec' => '',
+            'ind_cod_tec' => NULL,
             'title_tec' => 'Administración Cuestionarios',
             'description_tec' => 'Esta técnica permite la recopilación de gran cantidad de datos en un período corto de tiempo. 
             Hay dos tipos de cuestionarios: cerrados, donde las respuestas a las preguntas son provistas como selección múltiple o escala; 

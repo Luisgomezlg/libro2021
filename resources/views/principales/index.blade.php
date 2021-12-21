@@ -72,6 +72,12 @@
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <a class="btn btn-edit" onclick="window.location='{{route('principales.edit', $pri->id)}}'"><span stroke-width="1.5" data-feather="edit"></span></a>
                       <a class="btn btn-delete" onclick="deletePrincipal({{$pri->id}})" href=""><span stroke-width="1.5" data-feather="delete"></span></a>
+                      @if($pri->id == 1)
+                      <a class="btn btn-edit" onclick="window.location='{{route('principales.edit', $pri->id)}}'"><span stroke-width="1.5" data-feather="edit"></span></a>
+                      <p>Solo editar</p>
+                      @else
+                        
+                      @endif
                     </td>
                   </tr>
                   @endforeach
