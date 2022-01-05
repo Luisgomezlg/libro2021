@@ -51,7 +51,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                   @foreach($metodo as $met)
-                  @if($met->ind_cod == "-" && $met->description == "-" || $met->ind_cod == "-" && $met->description == "-")
+                  @if($met->title == "-" && $met->description == "-" || $met->title == "-" && $met->description == "-")
 
                   @else
                   <tr>

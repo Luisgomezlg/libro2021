@@ -151,7 +151,7 @@
                         @endif
 
                         @if ($li->description != null)
-                        @if($li->ind_cod == "-" || $li->ind_cod == "-")
+                        @if($li->title == "-" || $li->description == "-")
                         <h4 style="display: none;">@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif</h4>
                         @else
                         <h4>@if (Request::is('tecnicas/*')){{ $li->ind_cod_tec }}@else{{ $li->ind_cod }} @endif @if (Request::is('tecnicas/*')){{ $li->title_tec }}@else{{ $li->title }} @endif</h4>

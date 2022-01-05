@@ -20,7 +20,7 @@ class CreatePrincipalsTable extends Migration
             $table->text("description_cli")->nullable();
             $table->text("description_adm")->nullable();
             $table->string("title_image")->nullable();
-            $table->string("image", 2100)->nullable();
+            $table->string("image_pri", 2100)->nullable();
             $table->timestamps();
         });
     }

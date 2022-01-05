@@ -50,6 +50,7 @@ class metodoController extends Controller
             ->leftjoin('insumos', 'insumos.id', '=', 'insumo_metodo.insumo_id')
             ->leftjoin('tecnicas', 'tecnicas.id', '=', 'metodo_tecnica.tecnica_id')
             ->where('metodos.first_cod', '=', $id)
+            ->whereNotNull('metodos.id_user')
             ->orderBy('metodos.ind_cod', 'asc')
             ->get();
 
@@ -218,11 +219,11 @@ class metodoController extends Controller
                 $user = Auth::user()->id;
                 $metodo2 = Metodo::create([
                     'first_cod' => $request->id_metodo,
-                    'ind_cod' => $datos,
+                    'ind_cod' => $request->ind_cod,
                     'title' => $datos,
                     'description' => $datos,
                     'creation_date' => $fecha,
-                    'id_user' => $user
+                    'id_user' => NULL
 
                 ]);
             }
@@ -232,11 +233,11 @@ class metodoController extends Controller
                 $user = Auth::user()->id;
                 $metodo2 = Metodo::create([
                     'first_cod' => $request->id_metodo,
-                    'ind_cod' => $datos,
+                    'ind_cod' => $request->ind_cod,
                     'title' => $datos,
                     'description' => $datos,
                     'creation_date' => $fecha,
-                    'id_user' => $user
+                    'id_user' => NULL
 
                 ]);
             }
@@ -270,6 +271,7 @@ class metodoController extends Controller
             ->leftjoin('insumos', 'insumos.id', '=', 'insumo_metodo.insumo_id')
             ->leftjoin('tecnicas', 'tecnicas.id', '=', 'metodo_tecnica.tecnica_id')
             ->where('metodos.first_cod', '=', $id)
+            ->orderBy('metodos.ind_cod', 'asc')
             ->get();
 
         //dd($show);

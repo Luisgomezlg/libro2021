@@ -130,6 +130,7 @@ class DatabaseSeeder extends Seeder
                 'id_user' => 1,
             ]
         ]);
+        /*
         DB::table('metodos')->insert([
 
             [
@@ -239,5 +240,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RolesSeeder::class
         ]);
+        */
     }
 }
